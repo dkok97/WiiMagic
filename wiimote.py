@@ -79,6 +79,7 @@ cur_ir = [None, None, None, None]
 prev_ir = [None, None, None, None]
 A = None
 t = None
+release_counter = 0
 
 cal_points = []
 screen_points = []
@@ -140,17 +141,28 @@ while True:
           create_mats = 0
 
         if cur_ir[0]!=None:
+          release_counter = 0
           cam_point = np.array([cur_ir[0]['pos'][0], cur_ir[0]['pos'][1], 1])
 ##          print('camera point: ', cam_point)
 
           screen_point = get_screen_point(C, cam_point)
 ##          print('screen point:', screen_point)
 ##          mouse.move(screen_point[0], screen_point[1])
-          pos=mouse.get_position()
+##          pos=mouse.get_position()
           print('current pos', pos)
           print('screen point', screen_point)
-          m.press(pos[0], pos[1])
-          m.release(screen_point[0], screen_point[1])
+##          m.press(pos[0], pos[1])
+          if mouse.is_pressed(button='left'):
+              m.move(screen_point[0], screen_point[1])
+          else:
+              m.press(screen_point[0], screen_point[1])
+        else:
+          if mouse.is_pressed(button='left'):
+            release_counter = release_counter + 1
+            if release_cuonter==5:
+              pos=mouse.get_position()
+              m.release(pos[0], pos[1])
+              release_cuonter = 0
 
     else:
       print(cur_ir)
