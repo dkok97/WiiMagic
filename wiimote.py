@@ -132,6 +132,7 @@ while True:
           cal_points.append(cur_ir[0]['pos'])
         if len(cal_points)==4:
           cal_done = 1
+        time.sleep(button_delay)
         print(cal_points)
 
       else:
@@ -149,23 +150,20 @@ while True:
 ##          print('screen point:', screen_point)
 ##          mouse.move(screen_point[0], screen_point[1])
 ##          pos=mouse.get_position()
-          print('current pos', pos)
-          print('screen point', screen_point)
+##          print('current pos', pos)
+##          print('screen point', screen_point)
 ##          m.press(pos[0], pos[1])
           if mouse.is_pressed(button='left'):
               m.move(screen_point[0], screen_point[1])
           else:
               m.press(screen_point[0], screen_point[1])
         else:
-          if mouse.is_pressed(button='left'):
-            release_counter = release_counter + 1
-            if release_cuonter==5:
-              pos=mouse.get_position()
-              m.release(pos[0], pos[1])
-              release_cuonter = 0
+          release_counter = release_counter + 1
+          if release_counter==5:
+            pos=mouse.get_position()
+            m.release(pos[0], pos[1])
 
     else:
       print(cur_ir)
+      time.sleep(button_delay)
       
-    
-  time.sleep(button_delay)
